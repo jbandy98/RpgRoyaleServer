@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/RpgRoyaleServer.iml" filepath="$PROJECT_DIR$/.idea/RpgRoyaleServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/jobservice/jobservice.iml" filepath="$PROJECT_DIR$/jobservice/jobservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/loginservice/loginservice.iml" filepath="$PROJECT_DIR$/loginservice/loginservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/playerservice/playerservice.iml" filepath="$PROJECT_DIR$/playerservice/playerservice.iml" />
     </modules>
   </component>
 </project>

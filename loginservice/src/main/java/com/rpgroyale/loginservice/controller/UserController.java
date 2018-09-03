@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -90,6 +91,11 @@ public class UserController {
 
             log.info("User successfully created.");
 
+            // create the new playerData entry by calling the PlayerService create API
+            final String url = "http://localhost:7103/player/create/" + user.getUsername();
+            RestTemplate restTemplate = new RestTemplate();
+            String createResponse = restTemplate.getForObject(url, String.class);
+            log.info("Player Data created. Create response: " + createResponse);
             response.setUser(result.getUsername());
             response.setStatus("SUCCESS");
         }

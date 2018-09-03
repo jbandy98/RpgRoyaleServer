@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/loginservice/pom.xml" />
         <option value="$PROJECT_DIR$/jobservice/pom.xml" />
+        <option value="$PROJECT_DIR$/playerservice/pom.xml" />
       </list>
     </option>
   </component>

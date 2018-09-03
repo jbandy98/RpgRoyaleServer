@@ -1,0 +1,1 @@
+insert into player values ('jbandy98','',0,1,15,3,12,4.2,1150);

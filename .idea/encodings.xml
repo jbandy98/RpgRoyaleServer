@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/jobservice" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loginservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/playerservice" charset="UTF-8" />
   </component>
 </project>
