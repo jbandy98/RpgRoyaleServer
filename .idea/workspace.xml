@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="686e5c9c-1bf4-4ff9-9fb3-929f8e029bd2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/heroservice/src/test/java/com/rpgroyale/heroservice/backup.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/heroservice/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/controller/HeroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/controller/HeroController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heroservice/src/main/resources/data.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/JobController.java" beforeDir="false" afterPath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/JobController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/entity/JobLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/entity/JobLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/repo/JobLevelRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/repo/JobLevelRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobservice/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/jobservice/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobservice/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/jobservice/src/main/resources/schema.sql" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/loginservice/target/" />
     <ignored path="$PROJECT_DIR$/jobservice/target/" />
@@ -77,6 +68,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Hero.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/entity/Hero.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+              <folding>
+                <element signature="e#6364#6365#0" expanded="true" />
+                <element signature="e#6402#6403#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="JobLevel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/entity/JobLevel.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -120,8 +124,8 @@
       <file leaf-file-name="HeroController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/controller/HeroController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="85" column="54" lean-forward="true" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+            <state relative-caret-position="533">
+              <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -172,7 +176,6 @@
         <option value="$PROJECT_DIR$/loginservice/src/main/java/com/rpgroyale/loginservice/controller/UserController.java" />
         <option value="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/repo/HeroRepo.java" />
         <option value="$PROJECT_DIR$/heroservice/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/entity/Hero.java" />
         <option value="$PROJECT_DIR$/heroservice/src/main/resources/schema.sql" />
         <option value="$PROJECT_DIR$/heroservice/src/test/java/com/rpgroyale/heroservice/backup.sql" />
         <option value="$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/entity/JobLevel.java" />
@@ -182,6 +185,7 @@
         <option value="$PROJECT_DIR$/jobservice/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/jobservice/src/main/resources/schema.sql" />
         <option value="$PROJECT_DIR$/heroservice/src/main/resources/data.sql" />
+        <option value="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/entity/Hero.java" />
         <option value="$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/controller/HeroController.java" />
       </list>
     </option>
@@ -265,6 +269,25 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RpgRoyaleServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RpgRoyaleServer" type="462c0819:PsiDirectoryNode" />
+              <item name="heroservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="heroservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RpgRoyaleServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RpgRoyaleServer" type="462c0819:PsiDirectoryNode" />
+              <item name="heroservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="heroservice" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RpgRoyaleServer" type="b2602c69:ProjectViewProjectNode" />
@@ -501,16 +524,15 @@
       <workItem from="1535672157035" duration="1365000" />
       <workItem from="1535814859499" duration="9062000" />
       <workItem from="1535897641244" duration="5300000" />
-      <workItem from="1535980713614" duration="16561000" />
+      <workItem from="1535980713614" duration="17770000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32288000" />
+    <option name="totallyTimeSpent" value="33497000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1293" height="1407" extended-state="0" />
-    <editor active="true" />
+    <frame x="381" y="5" width="1884" height="1408" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5004951" side_tool="true" weight="0.3294025" />
@@ -524,17 +546,17 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.3296617" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.3294025" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info active="true" anchor="bottom" id="Run Dashboard" order="14" visible="true" weight="0.36978757" />
+      <window_info active="true" anchor="bottom" id="Run Dashboard" order="14" visible="true" weight="0.36949685" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49950495" weight="0.3296617" />
       <window_info anchor="bottom" id="Spring" order="12" />
       <window_info anchor="bottom" id="Terminal" order="13" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25223035" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17050439" />
       <window_info anchor="right" id="Bean Validation" order="3" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -796,18 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/entity/Hero.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1127">
-          <caret line="98" column="26" lean-forward="true" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6364#6365#0" expanded="true" />
-            <element signature="e#6402#6403#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/heroservice/src/test/java/com/rpgroyale/heroservice/backup.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -825,16 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="79" selection-start-line="5" selection-start-column="79" selection-end-line="5" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/repo/JobLevelRepo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -889,10 +889,31 @@
     <entry file="file://$PROJECT_DIR$/heroservice/src/main/resources/data.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/jobservice/src/main/java/com/rpgroyale/jobservice/repo/JobLevelRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/entity/Hero.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+          <folding>
+            <element signature="e#6364#6365#0" expanded="true" />
+            <element signature="e#6402#6403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/heroservice/src/main/java/com/rpgroyale/heroservice/controller/HeroController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="85" column="54" lean-forward="true" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+        <state relative-caret-position="533">
+          <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

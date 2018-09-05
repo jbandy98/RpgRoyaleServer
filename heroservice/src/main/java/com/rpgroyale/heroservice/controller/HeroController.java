@@ -93,6 +93,8 @@ public class HeroController {
         createdHero.setBaseCharisma(jobInfo.getBaseCharisma());
         createdHero.setBaseHp(jobInfo.getBaseHp());
         createdHero.setBaseSp(jobInfo.getBaseSp());
+        createdHero.setCurrentHp(jobInfo.getBaseHp());
+        createdHero.setCurrentSp(jobInfo.getBaseSp());
         createdHero.setPlayerName(hero.getPlayerName());
 
         Hero savedHero = heroRepo.save(createdHero);
