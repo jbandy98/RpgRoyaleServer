@@ -51,15 +51,27 @@ public class JobController {
         return new ResponseEntity<>(jobObj, HttpStatus.OK);
     }
 
-    @GetMapping("/{job}/{level}")
-    public ResponseEntity<JobLevel> getJobLevelInfo(@PathVariable String job, @PathVariable int level) {
-        log.info("Providing job/level information on " + job + " at level " + level);
-        JobLevel jobLevel = jobLevelRepo.findByNameAndLevel(job, level);
+    @GetMapping("/{jobName}/{level}")
+    public ResponseEntity<JobLevel> getJobLevelInfo(@PathVariable String jobName, @PathVariable int level) {
+        log.info("Providing job/level information on " + jobName + " at level " + level);
+        JobLevel jobLevel = jobLevelRepo.findByjobNameAndLevel(jobName, level);
         if (jobLevel == null) {
             log.error("Job/level info returned null.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(jobLevel, HttpStatus.OK);
+    }
+
+    @GetMapping("/joblevel")
+    public ResponseEntity<List<JobLevel>> getAllJobLevels() {
+        log.info("Getting all job levels.");
+        List<JobLevel> jobLevels =  jobLevelRepo.findAll();
+        if (jobLevels == null) {
+            log.error("No job level entries found.");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.info("Sending back all job level entries.");
+        return new ResponseEntity<>(jobLevels, HttpStatus.OK);
     }
 }

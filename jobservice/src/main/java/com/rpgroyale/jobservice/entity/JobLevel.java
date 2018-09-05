@@ -10,45 +10,45 @@ public class JobLevel {
     @Id
     private long id;
 
-    @Column
-    private String name;
+    @Column (name="job_name")
+    private String jobName;
 
     @Column
     private int level;
 
-    @Column
+    @Column (name="xp_to_level")
     private int xpToLevel;
 
     // all of the remaining values are their new values when the level changes. this is total, not cumulative
 
-    @Column
+    @Column (name = "base_strength")
     private int baseStrength;
 
-    @Column
+    @Column (name = "base_dexterity")
     private int baseDexterity;
 
-    @Column
+    @Column (name = "base_speed")
     private int baseSpeed;
 
-    @Column
+    @Column (name = "base_endurance")
     private int baseEndurance;
 
-    @Column
+    @Column (name = "base_spirit")
     private int baseSpirit;
 
-    @Column
+    @Column (name = "base_intelligence")
     private int baseIntelligence;
 
-    @Column
+    @Column (name = "base_willpower")
     private int baseWillpower;
 
-    @Column
+    @Column (name = "base_charisma")
     private int baseCharisma;
 
-    @Column
+    @Column (name = "base_hp")
     private int baseHp;
 
-    @Column
+    @Column (name = "base_sp")
     private int baseSp;
 
     public long getId() {
@@ -60,11 +60,11 @@ public class JobLevel {
     }
 
     public String getJobName() {
-        return name;
+        return jobName;
     }
 
     public void setJobName(String jobName) {
-        this.name = jobName;
+        this.jobName = jobName;
     }
 
     public int getLevel() {

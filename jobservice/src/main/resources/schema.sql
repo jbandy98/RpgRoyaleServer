@@ -6,20 +6,20 @@ create table Job (
     primary key (name)
 );
 
-create table JobLevel (
+create table job_level (
     id int not null AUTO_INCREMENT,
-    name varchar (25) not null,
+    job_name varchar (25) not null,
     level int not null,
-    xpToLevel int not null,
-    baseStrength int not null,
-    baseDexterity int not null,
-    baseSpeed int not null,
-    baseEndurance int not null,
-    baseSpirit int not null,
-    baseIntelligence int not null,
-    baseWillpower int not null,
-    baseCharisma int not null,
-    baseHp int not null,
-    baseSp int not null,
+    xp_to_level int not null,
+    base_strength int not null,
+    base_dexterity int not null,
+    base_speed int not null,
+    base_endurance int not null,
+    base_spirit int not null,
+    base_intelligence int not null,
+    base_willpower int not null,
+    base_charisma int not null,
+    base_hp int not null,
+    base_sp int not null,
     primary key (id)
 );

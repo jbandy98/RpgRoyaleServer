@@ -1,14 +1,13 @@
 package com.rpgroyale.heroservice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Hero {
 
     @Column(name = "hero_id")
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int heroId;
 
     @Column (name = "game_id")
