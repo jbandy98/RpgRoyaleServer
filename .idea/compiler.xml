@@ -10,6 +10,7 @@
         <module name="jobservice" />
         <module name="loginservice" />
         <module name="playerservice" />
+        <module name="worldservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
       <module name="jobservice" target="1.8" />
       <module name="loginservice" target="1.8" />
       <module name="playerservice" target="1.8" />
+      <module name="worldservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

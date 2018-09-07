@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/jobservice/pom.xml" />
         <option value="$PROJECT_DIR$/playerservice/pom.xml" />
         <option value="$PROJECT_DIR$/heroservice/pom.xml" />
+        <option value="$PROJECT_DIR$/worldservice/pom.xml" />
       </list>
     </option>
   </component>
