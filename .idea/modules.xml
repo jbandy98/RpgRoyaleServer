@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/RpgRoyaleServer.iml" filepath="$PROJECT_DIR$/.idea/RpgRoyaleServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gamedataservice/gamedataservice.iml" filepath="$PROJECT_DIR$/gamedataservice/gamedataservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/heroservice/heroservice.iml" filepath="$PROJECT_DIR$/heroservice/heroservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/jobservice/jobservice.iml" filepath="$PROJECT_DIR$/jobservice/jobservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/loginservice/loginservice.iml" filepath="$PROJECT_DIR$/loginservice/loginservice.iml" />

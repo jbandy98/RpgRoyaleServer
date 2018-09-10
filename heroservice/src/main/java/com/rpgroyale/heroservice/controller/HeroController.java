@@ -67,6 +67,25 @@ public class HeroController {
         return new ResponseEntity<>(newHero, HttpStatus.OK);
     }
 
+    @GetMapping(value="/cleanup/{playerId}")
+    public ResponseEntity<Hero> cleanupPlayerHeroes(@PathVariable String playerId) {
+        log.info("Running cleanup script for " + playerId);
+        List<Hero> heroes = heroRepo.findByPlayerName(playerId);
+        for(Hero hero : heroes) {
+            log.info("Cleaning up hero " + hero.getHeroName() + " for player " + playerId);
+            heroRepo.delete(hero);
+        }
+        heroes = heroRepo.findByPlayerName(playerId);
+
+        if (heroes.isEmpty()) {
+            log.info("Hero array is empty, returning ok.");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.error("Hero array is NOT empty. Something didn't work correctly?");
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
     @PostMapping(value="/create")
     public ResponseEntity<Hero> createHero(@RequestBody final Hero hero) {
         log.info("Creating a hero.");

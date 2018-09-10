@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gamedataservice" />
         <module name="heroservice" />
         <module name="jobservice" />
         <module name="loginservice" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gamedataservice" target="1.8" />
       <module name="heroservice" target="1.8" />
       <module name="jobservice" target="1.8" />
       <module name="loginservice" target="1.8" />

@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/playerservice/pom.xml" />
         <option value="$PROJECT_DIR$/heroservice/pom.xml" />
         <option value="$PROJECT_DIR$/worldservice/pom.xml" />
+        <option value="$PROJECT_DIR$/gamedataservice/pom.xml" />
       </list>
     </option>
   </component>
