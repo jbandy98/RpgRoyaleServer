@@ -97,6 +97,28 @@ public class Hero {
     @Column (name = "current_sp")
     private int currentSp;
 
+    @Column (name = "attack_range")
+    private int attackRange;
+
+    @Column (name = "attack_type")
+    private String attackType;
+
+    public int getAttackRange() {
+        return attackRange;
+    }
+
+    public void setAttackRange(int attackRange) {
+        this.attackRange = attackRange;
+    }
+
+    public String getAttackType() {
+        return attackType;
+    }
+
+    public void setAttackType(String attackType) {
+        this.attackType = attackType;
+    }
+
     public int getHeroId() {
         return heroId;
     }
@@ -336,5 +358,13 @@ public class Hero {
     public void setCurrentSp(int currentSp) {
         this.currentSp = currentSp;
     }
+
+    public int getMaxHp() { return baseHp + bonusHp; }
+    public int getMaxSp() { return baseSp + bonusSp; }
+
+    public int getMinAutoDamage() { return (baseStrength + bonusStrength) * 1; }
+    public int getMaxAutoDamage() { return (baseStrength + bonusStrength) * 2; }
+    public int getDefense() { return (baseDexterity + bonusDexterity) * 2; }
+    public int getResist() { return (baseWillpower + bonusWillpower) * 2; }
 
 }

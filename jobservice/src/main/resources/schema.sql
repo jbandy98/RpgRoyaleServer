@@ -21,5 +21,7 @@ create table job_level (
     base_charisma int not null,
     base_hp int not null,
     base_sp int not null,
+    attack_range int not null,
+    attack_type varchar(15) not null,
     primary key (id)
 );

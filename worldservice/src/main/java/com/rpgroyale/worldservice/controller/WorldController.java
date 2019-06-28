@@ -42,7 +42,12 @@ public class WorldController {
         WorldInfo worldInfo = worldInfoRepo.findByGameId(gameId);
         if (worldInfo == null) {
             log.error("World for game id " + gameId + " not found.");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            WorldInfo worldInfoNew = new WorldInfo();
+            worldInfoNew.setGameId(99);
+            worldInfoNew.setHeight(300);
+            worldInfoNew.setWidth(300);
+            worldInfoNew.setSeed(54);
+            return new ResponseEntity<>(worldInfoNew, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(worldInfo, HttpStatus.OK);

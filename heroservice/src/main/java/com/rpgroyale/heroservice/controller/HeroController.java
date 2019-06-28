@@ -1,16 +1,14 @@
 package com.rpgroyale.heroservice.controller;
 
-
+import com.rpgroyale.heroservice.clients.JobClient;
 import com.rpgroyale.heroservice.entity.Hero;
+import com.rpgroyale.heroservice.entity.JobLevel;
 import com.rpgroyale.heroservice.repo.HeroRepo;
-import com.rpgroyale.jobservice.entity.JobLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 
 @RestController
@@ -20,6 +18,9 @@ public class HeroController {
 
     @Autowired
     HeroRepo heroRepo;
+
+    @Autowired
+    JobClient jobClient;
 
     @GetMapping(value="/id/{heroId}")
     public ResponseEntity<Hero> getHero(@PathVariable int heroId) {
@@ -92,9 +93,7 @@ public class HeroController {
         // we are good, this hero doesn't exist
         // pull the base stats out of the job level tables
         String className = hero.getClassName();
-        final String url = "http://localhost:7102/jobs/" + className + "/1";
-        RestTemplate restTemplate = new RestTemplate();
-        JobLevel jobInfo = restTemplate.getForObject(url, JobLevel.class);
+        JobLevel jobInfo = jobClient.getJobLevelInfo(className, 1);
         log.info("Job level data pulled. ");
         log.info("Job data pulled: " + jobInfo.getJobName() + " lvl " + jobInfo.getLevel());
         // save the data to the hero table
@@ -114,6 +113,8 @@ public class HeroController {
         createdHero.setBaseSp(jobInfo.getBaseSp());
         createdHero.setCurrentHp(jobInfo.getBaseHp());
         createdHero.setCurrentSp(jobInfo.getBaseSp());
+        createdHero.setAttackRange(jobInfo.getAttackRange());
+        createdHero.setAttackType(jobInfo.getAttackType());
         createdHero.setPlayerName(hero.getPlayerName());
 
         Hero savedHero = heroRepo.save(createdHero);

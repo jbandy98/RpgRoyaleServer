@@ -3,8 +3,10 @@ package com.rpgroyale.jobservice.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="job_level")
 public class JobLevel {
 
     @Id
@@ -50,6 +52,28 @@ public class JobLevel {
 
     @Column (name = "base_sp")
     private int baseSp;
+
+    @Column (name = "attack_range")
+    private int attackRange;
+
+    @Column (name = "attack_type")
+    private String attackType;
+
+    public int getAttackRange() {
+        return attackRange;
+    }
+
+    public void setAttackRange(int attackRange) {
+        this.attackRange = attackRange;
+    }
+
+    public String getAttackType() {
+        return attackType;
+    }
+
+    public void setAttackType(String attackType) {
+        this.attackType = attackType;
+    }
 
     public long getId() {
         return id;
