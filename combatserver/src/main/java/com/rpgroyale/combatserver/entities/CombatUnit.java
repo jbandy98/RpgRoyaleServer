@@ -39,6 +39,9 @@ public abstract class CombatUnit
     public abstract int getAttackRange();
     public abstract String getAttackDamageType();
     public abstract String getUnitName();
+    public abstract int getGpValue();
+    public abstract int getXpValue();
+    public abstract int getApValue();
 
     public CombatUnit(int x, int y, boolean isHero, AIStrategy ai) {
         this.isHero = isHero;
@@ -222,7 +225,8 @@ public abstract class CombatUnit
         GridLocation moveLocation = combatGrid.findPathTowards(this, target);
 
 //        log.info("moving from " + location.intX + ", " + location.intY + " to " + moveLocation.intX + ", " + moveLocation.intY);
-        moveUnitTo(moveLocation);
+        if (moveLocation != null)
+            moveUnitTo(moveLocation);
     }
 
     // should auto attack if possible after actions (moving, casting)

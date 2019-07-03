@@ -10,6 +10,7 @@ import com.jbcomputers.enemyservice.repo.ZoneEnemiesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -275,7 +276,7 @@ public class GameEnemyManager {
 
     Double playerDistance(GameData player, int xLoc, int yLoc) {
         double distance = Math.sqrt((xLoc - player.getLocX())*(xLoc - player.getLocX()) + (yLoc - player.getLocY()) * (yLoc - player.getLocY()));
-        log.info("Distance for player: " + player.getLocX() + ", " + player.getLocY() + " enemy loc: " + xLoc + ", " + yLoc + " distance: " + distance);
+//        log.info("Distance for player: " + player.getLocX() + ", " + player.getLocY() + " enemy loc: " + xLoc + ", " + yLoc + " distance: " + distance);
         return distance;
     }
 }

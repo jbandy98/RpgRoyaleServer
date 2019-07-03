@@ -18,6 +18,21 @@ public class EnemyUnit extends CombatUnit {
     }
 
     @Override
+    public int getGpValue() {
+        return enemy.gpValue;
+    }
+
+    @Override
+    public int getXpValue() {
+        return enemy.xpValue;
+    }
+
+    @Override
+    public int getApValue() {
+        return enemy.getApValue();
+    }
+
+    @Override
     public void adjustHp(int hpChange)
     {
         enemy.currentHp += hpChange;

@@ -22,6 +22,9 @@ public class CombatLoop extends Thread {
     List<CombatUnit> allUnits;
     CombatGrid combatGrid;
     List<CombatUnit> unitsToRemove;
+    int gpEarned;
+    int xpEarned;
+    int apEarned;
 
     int UPS = 1;
     boolean running;
@@ -52,17 +55,17 @@ public class CombatLoop extends Thread {
         log.info("Encounter location: " + encounter.xLoc + ", " + encounter.yLoc + "\nPlayer info: " + playerData.getPlayerId());
         log.info("Enemies: " + enemies.get(0).getEnemyName());
         log.info("Hero info: " + playerHeroes.get(0).getHeroName() + " hero attack range: " + playerHeroes.get(0).getAttackRange());
-        int startingX = 0;
-        int startingY = 0;
+        int startingX = 9;
+        int startingY = 3;
         for(Hero hero: playerHeroes) {
             HeroUnit heroUnit = new HeroUnit(startingX,startingY,true,AIStrategy.HIGHEST_THREAT);
             heroUnit.hero = hero;
             heroUnits.add(heroUnit);
             allUnits.add(heroUnit);
-            startingY++;
+            startingY--;
         }
         log.info("after adding all heroes, the hero list has " + heroUnits.size() + " items and the all units list has " + allUnits.size());
-        startingX = 9;
+        startingX = 0;
         startingY = 0;
         for(Enemy enemy: enemies) {
             EnemyUnit enemyUnit = new EnemyUnit(startingX, startingY, false, AIStrategy.HIGHEST_THREAT);
@@ -149,6 +152,9 @@ public class CombatLoop extends Thread {
         for(CombatUnit unit: unitsToRemove) {
             allUnits.remove(unit);
             if(!unit.isHero) {
+                gpEarned += unit.getGpValue();
+                xpEarned += unit.getXpValue();
+                apEarned += unit.getApValue();
                 enemyUnits.remove(unit);
                 for(CombatUnit heroUnit: heroUnits) {
                     heroUnit.removeUnitFromThreatLevels(unit);
@@ -166,6 +172,19 @@ public class CombatLoop extends Thread {
         displayMapInLog();
         if (enemyUnits.size() == 0) {
             log.info(playerName + "'s group has defeated the enemies!");
+            // divvy out xp and loot
+            playerData.setGold(playerData.getGold() + gpEarned);
+            log.info("Player data saved.");
+            ClientUtil.gameDataClient.updateGameInfo(playerData);
+            for(Hero hero: playerHeroes) {
+                log.info(hero.getHeroName() + "'s hp at end of battle is: " + hero.getCurrentHp());
+                hero.setAp(hero.getAp() + Math.round(apEarned / playerHeroes.size()));
+                hero.setXp(hero.getXp() + Math.round(xpEarned / playerHeroes.size()));
+                ClientUtil.heroClient.saveHero(hero);
+            }
+            log.info("Hero data saved.");
+            ClientUtil.encounterClient.deleteEncounterById(encounterId);
+            log.info("Encounter removed from db and game");
             running = false;
         } else if (heroUnits.size() == 0) {
             log.info(playerName + "'s group has been defeated...");

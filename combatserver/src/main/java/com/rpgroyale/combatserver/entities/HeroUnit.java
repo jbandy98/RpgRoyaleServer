@@ -19,6 +19,21 @@ public class HeroUnit extends CombatUnit {
     }
 
     @Override
+    public int getGpValue() {
+        return 0;
+    }
+
+    @Override
+    public int getXpValue() {
+        return 0;
+    }
+
+    @Override
+    public int getApValue() {
+        return 0;
+    }
+
+    @Override
     public void adjustHp(int hpChange) {
         hero.setCurrentHp(hero.getCurrentHp() + hpChange);
         if (hero.getCurrentHp() > hero.getMaxHp()) {

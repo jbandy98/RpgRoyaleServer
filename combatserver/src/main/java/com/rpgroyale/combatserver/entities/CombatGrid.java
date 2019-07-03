@@ -166,10 +166,14 @@ public class CombatGrid {
 
         Collections.sort(neighborNodes);
 
-        Node nodeToMoveTo = neighborNodes.get(0);
-        GridLocation locationToMoveTo = getLocationAt(nodeToMoveTo.x, nodeToMoveTo.y);
+        if (neighborNodes.size() != 0) {
+            Node nodeToMoveTo = neighborNodes.get(0);
+            GridLocation locationToMoveTo = getLocationAt(nodeToMoveTo.x, nodeToMoveTo.y);
+            return locationToMoveTo;
+        }
 
-        return locationToMoveTo;
+        // couldn't find a spot to move, need to stay put for now
+        return null;
     }
 
     public Path findPath(int startX, int startY, int endX, int endY)
