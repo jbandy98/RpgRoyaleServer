@@ -26,6 +26,7 @@ public abstract class CombatUnit
     public boolean castingComplete;
     public boolean manualTarget;
     public CombatGrid combatGrid;
+    public transient PathFindingUtil pathUtil;
 
     public abstract int getCurrentHp();
     public abstract void adjustHp(int hpChange);
@@ -58,6 +59,7 @@ public abstract class CombatUnit
         moveComplete = true;
         castingComplete = true;
         manualTarget = false;
+        pathUtil = new PathFindingUtil(combatGrid);
     }
 
     public void incapacitate()
@@ -146,7 +148,7 @@ public abstract class CombatUnit
     }
 
     public void runFromUnit(CombatUnit target) {
-        GridLocation targetSpot = combatGrid.findPathAway(location.intX, location.intY, target.location.intX, target.location.intY);
+        GridLocation targetSpot = pathUtil.findPathAway(location.intX, location.intY, target.location.intX, target.location.intY);
 
         moveUnitTo(targetSpot);
     }
@@ -222,7 +224,7 @@ public abstract class CombatUnit
     public void chaseUnit(CombatUnit target)
     {
 
-        GridLocation moveLocation = combatGrid.findPathTowards(this, target);
+        GridLocation moveLocation = pathUtil.findPathTowards(this, target);
 
 //        log.info("moving from " + location.intX + ", " + location.intY + " to " + moveLocation.intX + ", " + moveLocation.intY);
         if (moveLocation != null)

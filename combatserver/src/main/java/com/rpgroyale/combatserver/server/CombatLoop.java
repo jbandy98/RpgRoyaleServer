@@ -2,6 +2,7 @@ package com.rpgroyale.combatserver.server;
 
 import com.rpgroyale.combatserver.clients.ClientUtil;
 import com.rpgroyale.combatserver.entities.*;
+import com.rpgroyale.combatserver.messagedata.CombatData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Slf4j
 public class CombatLoop extends Thread {
 
+    CombatData combatData;
     String playerName;
     Integer gameId;
     Integer encounterId;
@@ -25,6 +27,7 @@ public class CombatLoop extends Thread {
     int gpEarned;
     int xpEarned;
     int apEarned;
+    String combatState;
 
     int UPS = 1;
     boolean running;
@@ -100,7 +103,7 @@ public class CombatLoop extends Thread {
         }
 
         displayMapInLog();
-
+        combatState = "combat";
         // start combat loop and perform AI commands
         mainCombatLoop();
         // read in player input through websocket and perform actions
@@ -127,6 +130,10 @@ public class CombatLoop extends Thread {
                 runCombatRound();
             }
         }
+    }
+
+    private CombatData generateMessageData() {
+        return new CombatData(gameId, encounterId, playerData, heroUnits, enemyUnits, allUnits, combatGrid, gpEarned, xpEarned, apEarned, combatState);
     }
 
     private void runCombatRound() {
@@ -170,6 +177,7 @@ public class CombatLoop extends Thread {
         combatGrid.setCombatGridUnits(allUnits);
         combatGrid.populateMap();
         displayMapInLog();
+
         if (enemyUnits.size() == 0) {
             log.info(playerName + "'s group has defeated the enemies!");
             // divvy out xp and loot
@@ -184,12 +192,16 @@ public class CombatLoop extends Thread {
             }
             log.info("Hero data saved.");
             ClientUtil.encounterClient.deleteEncounterById(encounterId);
+            combatState = "won";
             log.info("Encounter removed from db and game");
             running = false;
         } else if (heroUnits.size() == 0) {
             log.info(playerName + "'s group has been defeated...");
+            combatState = "lost";
             running = false;
         }
+        combatData = generateMessageData();
+
     }
 
     public void displayMapInLog() {
