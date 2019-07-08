@@ -28,4 +28,7 @@ public interface EncounterRepository extends JpaRepository<Encounter, Integer> {
     List<Encounter> findAllByGameId(@Param("gameId") Integer gameId);
 
     Encounter findByGameIdAndEncounterId(Integer gameId, Integer encounterId);
+
+    @Query("select e from Encounter e where e.xLoc = :#{#x_loc} and e.yLoc = :#{#y_loc} and e.inCombat = 'true'")
+    Encounter findEncounterByLocation(@Param("x_loc") Integer xLoc, @Param("y_loc") Integer yLoc);
 }

@@ -1,10 +1,12 @@
 package com.rpgroyale.combatserver.messagedata;
 
 import com.rpgroyale.combatserver.entities.*;
+import org.springframework.web.socket.WebSocketMessage;
+
 
 import java.util.List;
 
-public class CombatData {
+public class CombatData implements WebSocketMessage<CombatData> {
     Integer gameId;
     Integer encounterId;
     PlayerGameData playerData;
@@ -117,5 +119,21 @@ public class CombatData {
 
     public void setCombatState(String combatState) {
         this.combatState = combatState;
+    }
+
+
+    @Override
+    public CombatData getPayload() {
+        return this;
+    }
+
+    @Override
+    public int getPayloadLength() {
+        return 1;
+    }
+
+    @Override
+    public boolean isLast() {
+        return true;
     }
 }

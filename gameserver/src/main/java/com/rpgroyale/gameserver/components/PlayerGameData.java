@@ -2,7 +2,7 @@ package com.rpgroyale.gameserver.components;
 
 import java.io.Serializable;
 
-public class GameData {
+public class PlayerGameData {
 
     private String playerId;
 

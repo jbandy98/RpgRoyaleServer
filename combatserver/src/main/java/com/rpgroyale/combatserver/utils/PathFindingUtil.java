@@ -17,8 +17,14 @@ public class PathFindingUtil {
     private CombatGrid combatGrid;
 
     public PathFindingUtil(CombatGrid combatGrid) {
+
+        instance = this;
         this.combatGrid = combatGrid;
     }
+
+
+
+    public static PathFindingUtil instance;
 
     public static float getDistance(int startX, int startY, int endX, int endY)
     {

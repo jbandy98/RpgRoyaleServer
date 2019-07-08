@@ -23,6 +23,9 @@ public class Encounter {
     @Column(name="y_loc")
     public Integer yLoc;
 
+    @Column(name="in_combat")
+    public boolean inCombat;
+
     @ElementCollection
     public List<Enemy> enemies;
 }

@@ -143,6 +143,7 @@ public class GameEnemyManager {
         encounter.xLoc = x;
         encounter.yLoc = y;
         encounter.zone = zone;
+        encounter.inCombat = false;
         ZoneEnemies zoneData = zoneEnemiesRepository.findZoneData(world,zone);
         List<Integer> enemyIdsToUse = parseEnemyIds(zoneData);
         List<EnemyRef> enemiesToPickFrom = new ArrayList<>();
@@ -224,9 +225,10 @@ public class GameEnemyManager {
         log.info("running through the movement routine for enemies in game " + gameId);
         for(Encounter encounter: encounters) {
             boolean moved = false;
+            if (encounter.inCombat)
+                continue;
             // if player is close, enemy should chase
             for(GameData gamePlayer: gamePlayers) {
-
                 if (playerDistance(gamePlayer, encounter.xLoc, encounter.yLoc) < 5) {
                     moved = true;
                     log.info("Closing in on player! - Encounter: " + encounter.encounterId);
@@ -238,6 +240,14 @@ public class GameEnemyManager {
                         encounter.yLoc++;
                     } else if (gamePlayer.getLocY() < encounter.yLoc) {
                         encounter.yLoc--;
+                    } else if (!encounter.inCombat && gamePlayer.getGameState() == "world" && gamePlayer.getLocY() == encounter.yLoc && gamePlayer.getLocX() == encounter.xLoc){
+                        // initiate combat with the player in the same spot
+                        gamePlayer.setGameState("combat");
+                        gameDataClient.updateGameInfo(gamePlayer);
+                        encounter.inCombat = true;
+                        encounterRepository.save(encounter);
+
+                        continue;
                     }
                 }
             }
@@ -272,6 +282,11 @@ public class GameEnemyManager {
             }
 
         return encounters;
+    }
+
+    public Encounter findEncounterAtPlayerLoc(Integer gameId, String playerId) {
+        GameData player = gameDataClient.getGameDataByPlayerId(playerId);
+        return encounterRepository.findEncounterByLocation(player.getLocX(), player.getLocY());
     }
 
     Double playerDistance(GameData player, int xLoc, int yLoc) {

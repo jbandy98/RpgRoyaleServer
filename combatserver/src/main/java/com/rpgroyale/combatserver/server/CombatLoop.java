@@ -3,8 +3,10 @@ package com.rpgroyale.combatserver.server;
 import com.rpgroyale.combatserver.clients.ClientUtil;
 import com.rpgroyale.combatserver.entities.*;
 import com.rpgroyale.combatserver.messagedata.CombatData;
+import com.rpgroyale.combatserver.utils.PathFindingUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class CombatLoop extends Thread {
     List<CombatUnit> allUnits;
     CombatGrid combatGrid;
     List<CombatUnit> unitsToRemove;
+    PathFindingUtil pathFindingUtil;
     int gpEarned;
     int xpEarned;
     int apEarned;
@@ -40,11 +43,11 @@ public class CombatLoop extends Thread {
         enemyUnits = new ArrayList<>();
         allUnits = new ArrayList<>();
         combatGrid = new CombatGrid();
-
+        pathFindingUtil = new PathFindingUtil(combatGrid);
     }
 
     @Override
-    public void run() {
+    public void run(){
 
         // create the websocket connection
 
@@ -136,7 +139,7 @@ public class CombatLoop extends Thread {
         return new CombatData(gameId, encounterId, playerData, heroUnits, enemyUnits, allUnits, combatGrid, gpEarned, xpEarned, apEarned, combatState);
     }
 
-    private void runCombatRound() {
+    private void runCombatRound()  {
         unitsToRemove = new ArrayList<>();
         for(CombatUnit unit: allUnits) {
             unit.chooseTarget();
@@ -201,6 +204,8 @@ public class CombatLoop extends Thread {
             running = false;
         }
         combatData = generateMessageData();
+        log.info("broadcasting combat data to clients...");
+        WebSocketHandler.Instance().broadcastCombatData(combatData);
 
     }
 

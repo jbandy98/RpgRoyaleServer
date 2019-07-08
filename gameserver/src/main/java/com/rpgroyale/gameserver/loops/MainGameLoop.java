@@ -2,7 +2,7 @@ package com.rpgroyale.gameserver.loops;
 
 import com.rpgroyale.gameserver.clients.ClientUtil;
 import com.rpgroyale.gameserver.components.Encounter;
-import com.rpgroyale.gameserver.components.GameData;
+import com.rpgroyale.gameserver.components.PlayerGameData;
 import com.rpgroyale.gameserver.components.Hero;
 import com.rpgroyale.gameserver.components.Player;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class MainGameLoop extends Thread {
     List<Encounter> encounters;
 
     // gamedata - player loc in game
-    List<GameData> gamePlayers;
+    List<PlayerGameData> gamePlayers;
 
     // players - main player profile
-    List<Player> players;
+    List<PlayerGameData> players;
 
     // heroes
     List<Hero> heroes;
@@ -35,7 +35,7 @@ public class MainGameLoop extends Thread {
 
     public MainGameLoop(Integer gameId) {
         this.gameId = gameId;
-
+        this.players = ClientUtil.gameDataClient.getAllPlayerGameDataById(gameId);
     }
 
     @Override
