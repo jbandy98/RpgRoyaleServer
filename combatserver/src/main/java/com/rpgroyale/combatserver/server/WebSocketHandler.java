@@ -11,9 +11,6 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Map;
@@ -29,7 +26,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements Handsh
 
     public static WebSocketHandler Instance() {
         if (instance == null) {
-            return new WebSocketHandler();
+            instance = new WebSocketHandler();
         }
         return instance;
     }
@@ -39,10 +36,10 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements Handsh
         log.info("New text message received from " + session.getId());
         Gson gson = new Gson();
         CombatData combatData = gson.fromJson(message.getPayload(),CombatData.class);
-        log.info("checking for correct parse: " + combatData.getPlayerData().getPlayerId());
+        log.info("checking for correct parse: " + combatData.getPlayerId());
         if (!clients.containsValue(session)) {
-            clients.put(combatData.getPlayerData().getPlayerId(), session);
-            log.info("added client " + combatData.getPlayerData().getPlayerId() + " to the session list.");
+            clients.put(combatData.getPlayerId(), session);
+            log.info("added client " + combatData.getPlayerId() + " to the session list.");
         }
         broadcastCombatData(combatData);
     }
@@ -67,6 +64,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements Handsh
 
     public void broadcastCombatData(CombatData combatData) {
         try {
+            log.info("Client size: " + clients.size());
             for (WebSocketSession session : clients.values()) {
                 log.info("sending message to client through broadcast");
                 Gson gson = new Gson();

@@ -240,7 +240,7 @@ public class GameEnemyManager {
                         encounter.yLoc++;
                     } else if (gamePlayer.getLocY() < encounter.yLoc) {
                         encounter.yLoc--;
-                    } else if (!encounter.inCombat && gamePlayer.getGameState() == "world" && gamePlayer.getLocY() == encounter.yLoc && gamePlayer.getLocX() == encounter.xLoc){
+                    } else if (!encounter.inCombat && gamePlayer.getGameState().equals("world") && gamePlayer.getLocY() == encounter.yLoc && gamePlayer.getLocX() == encounter.xLoc){
                         // initiate combat with the player in the same spot
                         gamePlayer.setGameState("combat");
                         gameDataClient.updateGameInfo(gamePlayer);

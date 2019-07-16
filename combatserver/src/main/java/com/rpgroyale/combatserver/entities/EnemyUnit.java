@@ -8,7 +8,7 @@ import java.util.List;
 public class EnemyUnit extends CombatUnit {
     public Enemy enemy;
 
-    public EnemyUnit(int x, int y, boolean isHero, AIStrategy ai) {
+    public EnemyUnit(int x, int y, boolean isHero, String ai) {
         super(x,y,isHero,ai);
     }
 
@@ -108,6 +108,26 @@ public class EnemyUnit extends CombatUnit {
     @Override
     public int getCurrentHp() {
         return enemy.getCurrentHp();
+    }
+
+    @Override
+    public int getMaxHp() {
+        return enemy.hp;
+    }
+
+    @Override
+    public int getCurrentSp() {
+        return enemy.currentSp;
+    }
+
+    @Override
+    public int getMaxSp() {
+        return enemy.sp;
+    }
+
+    @Override
+    public int getLevel() {
+        return enemy.level;
     }
 
 }

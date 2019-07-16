@@ -29,7 +29,7 @@ public class EnemyDataController {
         return new ResponseEntity<>(encounter, HttpStatus.OK);
     }
 
-    @RequestMapping("/{gameId}/{playerId}")
+    @RequestMapping("/combatEncounter/{gameId}/{playerId}")
     ResponseEntity<Encounter> findEncounterAtPlayerLocation(@PathVariable("gameId") Integer gameId, @PathVariable("playerId") String playerId) {
         Encounter encounter = manager.findEncounterAtPlayerLoc(gameId, playerId);
 

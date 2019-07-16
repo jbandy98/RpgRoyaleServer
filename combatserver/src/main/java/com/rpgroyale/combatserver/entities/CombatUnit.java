@@ -3,31 +3,75 @@ package com.rpgroyale.combatserver.entities;
 import com.rpgroyale.combatserver.utils.PathFindingUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Slf4j
 // enemy and hero combat units will derive from this class
+@Entity
+@Table(name="combat_unit")
 public abstract class CombatUnit
 {
-    public boolean isHero;
-    public GridLocation location;
-    public GridLocation movingTo;
-    public List<ThreatLevel> threatLevels;
-    public AIStrategy aiStrategy;
-    public CombatUnit currentTarget;
+
+    @Id
+    @Column(name="unit_id")
+    Integer unitId;
+
+    @Column(name="is_hero")
+    boolean isHero;
+
+    @Column(name="loc_x")
+    int locX;
+
+    @Column(name="loc_y")
+    int locY;
+
+    @Column(name="target_x")
+    int targetX;
+
+    @Column(name="target_y")
+    int targetY;
+
+    @Column(name="ai_strategy")
+    public String aiStrategy;
+
+    @Column(name="current_target")
+    public Integer currentTarget;
+
+    @Column(name="incapacitated")
     public boolean isIncapacitated;
+
+    @Column(name="dead")
     public boolean isDead;
+
+    @Column(name="casting")
     public boolean isCasting;
+
+    @Column(name="moving")
     public boolean isMoving;
+
+    @Column(name="attacking")
     public boolean isAttacking;
+
+    @Column(name="move_complete")
     public boolean moveComplete;
+
+    @Column(name="casting_complete")
     public boolean castingComplete;
+
+    @Column(name="manual_target")
     public boolean manualTarget;
-    public CombatGrid combatGrid;
+
+    @ElementCollection
+    public List<ThreatLevel> threatLevels;
 
     public abstract int getCurrentHp();
+    public abstract int getMaxHp();
+    public abstract int getCurrentSp();
+    public abstract int getMaxSp();
+    public abstract int getLevel();
     public abstract void adjustHp(int hpChange);
     public abstract void adjustSp(int spChange);
     public abstract void die();
@@ -43,13 +87,14 @@ public abstract class CombatUnit
     public abstract int getXpValue();
     public abstract int getApValue();
 
-    public CombatUnit(int x, int y, boolean isHero, AIStrategy ai) {
+    public CombatUnit(int x, int y, boolean isHero, String ai) {
         this.isHero = isHero;
-        location = new GridLocation(x, y, true, this);
-        movingTo = null;
-        threatLevels = new ArrayList<>();
+        locX = x;
+        locY = y;
+        targetX = -1;
+        targetY = -1;
         aiStrategy = ai;
-        currentTarget = null;
+        currentTarget = -1;
         isIncapacitated = false;
         isDead = false;
         isCasting = false;
@@ -58,6 +103,7 @@ public abstract class CombatUnit
         moveComplete = true;
         castingComplete = true;
         manualTarget = false;
+        threatLevels = new ArrayList<>();
     }
 
     public void incapacitate()
@@ -70,62 +116,27 @@ public abstract class CombatUnit
         isIncapacitated = false;
     }
 
-    public void moveUnitTo(GridLocation moveLocation)
-    {
-        if (moveComplete)
-        {
-            if (!combatGrid.getLocationAt(moveLocation.intX, moveLocation.intY).isOccupied) {
-                location = moveLocation;
-                GridLocation updatedLocation = combatGrid.getLocationAt(location.intX, location.intY);
-                updatedLocation.isOccupied = true;
-                updatedLocation.unit = this;
-            }
-            movingTo = null;
-            isMoving = false;
-        } else {
-            isMoving = true;
-            movingTo = moveLocation;
-        }
-    }
-
-    public void initializeEnemyThreatTargets(List<EnemyUnit> threatTargets) {
+    public void initializeThreatTargets(List<CombatUnit> threatTargets) {
         for(CombatUnit unit: threatTargets) {
-            ThreatLevel threatLevel = new ThreatLevel();
-            threatLevel.unit = unit;
-            threatLevel.threatLevel = 0;
-            threatLevels.add(threatLevel);
-        }
-    }
-
-    public void updateEnemyThreatTargets(List<EnemyUnit> threatTargets) {
-
-    }
-
-    public void setCombatGrid(CombatGrid grid) {
-        combatGrid = grid;
-    }
-
-    public void initializeHeroThreatTargets(List<HeroUnit> threatTargets) {
-        for(CombatUnit unit: threatTargets) {
-            if (!unit.isDead) {
+            if (unit.isHero() != isHero) {
                 ThreatLevel threatLevel = new ThreatLevel();
-                threatLevel.unit = unit;
-                threatLevel.threatLevel = 0;
+                threatLevel.setUnitIndex(unit.getUnitId());
+                threatLevel.setThreatLevel(0);
                 threatLevels.add(threatLevel);
             }
         }
     }
 
-    public void removeUnitFromThreatLevels(CombatUnit unit) {
+    public void removeUnitFromThreatLevels(Integer unitId) {
         ThreatLevel threatLevelToRemove = null;
         for (ThreatLevel threatLevel: threatLevels) {
-            if (unit.equals(threatLevel.unit)) {
+            if (unitId == threatLevel.getUnitIndex()) {
                 threatLevelToRemove = threatLevel;
                 break;
             }
         }
-
-        threatLevels.remove(threatLevelToRemove);
+        if (threatLevelToRemove != null)
+            threatLevels.remove(threatLevelToRemove);
     }
 
     public void performNormalAttack(CombatUnit target)
@@ -145,21 +156,15 @@ public abstract class CombatUnit
         target.adjustHp(-finalDamage);
     }
 
-    public void runFromUnit(CombatUnit target) {
-        GridLocation targetSpot = PathFindingUtil.instance.findPathAway(location.intX, location.intY, target.location.intX, target.location.intY);
-
-        moveUnitTo(targetSpot);
-    }
-
-    public CombatUnit chooseTarget()
+    public Integer chooseTarget()
     {
         if(manualTarget) {
             return currentTarget;
         } else {
-            CombatUnit target = null;
+            Integer target = -1;
 
             switch (aiStrategy) {
-                case HIGHEST_THREAT:
+                case "HIGHEST_THREAT":
                     target = chooseHighestThreatTarget();
                     break;
                 default:
@@ -167,74 +172,39 @@ public abstract class CombatUnit
                     break;
             }
 
-            if (target == null) {
-                target = chooseClosestOpponentAsTarget();
-            }
             currentTarget = target;
             return target;
         }
     }
 
-    public CombatUnit chooseHighestThreatTarget()
+    public Integer chooseHighestThreatTarget()
     {
         int highestThreat = 0;
-        CombatUnit threatTarget = null;
+        Integer threatTarget = -1;
         if (threatLevels == null || threatLevels.size() == 0) {
-            return null;
+            return -1;
         }
 
         for(ThreatLevel target : threatLevels)
         {
-            if (target.threatLevel > highestThreat)
+            if (target.getThreatLevel() > highestThreat)
             {
-                highestThreat = target.threatLevel;
-                threatTarget = target.unit;
+                highestThreat = target.getThreatLevel();
+                threatTarget = target.getUnitIndex();
             }
         }
         if(highestThreat == 0) {
-            return null;
+            return -1;
         }
         return threatTarget;
     }
 
-    public CombatUnit chooseClosestOpponentAsTarget()
-    {
-        float shortestDistance = 100.0f;
-        CombatUnit closestTarget = null;
-        for(ThreatLevel target : threatLevels)
-        {
-            float distance = PathFindingUtil.getDistance(location.intX, location.intY, target.unit.location.intX, target.unit.location.intY);
-//            log.info("distance to target " + target.unit.getUnitName() + " is " + distance);
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                closestTarget = target.unit;
-            }
-        }
-//        if (closestTarget != null) {
-//            log.info("closest target set to " + closestTarget.getUnitName());
-//        } else {
-//            log.info("closest target is null??");
-//        }
-        return closestTarget;
-    }
+//
+//
+//    // should auto attack if possible after actions (moving, casting)
+//    public void tryToStartAttacking(CombatUnit target) {
 
-    public void chaseUnit(CombatUnit target)
-    {
-
-        GridLocation moveLocation = PathFindingUtil.instance.findPathTowards(this, target);
-
-//        log.info("moving from " + location.intX + ", " + location.intY + " to " + moveLocation.intX + ", " + moveLocation.intY);
-        if (moveLocation != null)
-            moveUnitTo(moveLocation);
-    }
-
-    // should auto attack if possible after actions (moving, casting)
-    public void tryToStartAttacking(CombatUnit target) {
-        if (!isMoving && !isCasting && PathFindingUtil.getDistance(location.intX, location.intY, target.location.intX, target.location.intY) <= getAttackRange()) {
-            isAttacking = true;
-        }
-    }
+//    }
 
     public int getAttackDamage(CombatUnit defender) {
         Random rand = new Random();
@@ -257,4 +227,141 @@ public abstract class CombatUnit
         isCasting = false;
         isAttacking = false;
     }
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
+    }
+
+    public boolean isHero() {
+        return isHero;
+    }
+
+    public void setHero(boolean hero) {
+        isHero = hero;
+    }
+
+    public int getLocX() {
+        return locX;
+    }
+
+    public void setLocX(int locX) {
+        this.locX = locX;
+    }
+
+    public int getLocY() {
+        return locY;
+    }
+
+    public void setLocY(int locY) {
+        this.locY = locY;
+    }
+
+    public int getTargetX() {
+        return targetX;
+    }
+
+    public void setTargetX(int targetX) {
+        this.targetX = targetX;
+    }
+
+    public int getTargetY() {
+        return targetY;
+    }
+
+    public void setTargetY(int targetY) {
+        this.targetY = targetY;
+    }
+
+    public String getAiStrategy() {
+        return aiStrategy;
+    }
+
+    public void setAiStrategy(String aiStrategy) {
+        this.aiStrategy = aiStrategy;
+    }
+
+    public Integer getCurrentTarget() {
+        return currentTarget;
+    }
+
+    public void setCurrentTarget(Integer currentTarget) {
+        this.currentTarget = currentTarget;
+    }
+
+    public boolean isIncapacitated() {
+        return isIncapacitated;
+    }
+
+    public void setIncapacitated(boolean incapacitated) {
+        isIncapacitated = incapacitated;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public boolean isCasting() {
+        return isCasting;
+    }
+
+    public void setCasting(boolean casting) {
+        isCasting = casting;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
+
+    public boolean isMoveComplete() {
+        return moveComplete;
+    }
+
+    public void setMoveComplete(boolean moveComplete) {
+        this.moveComplete = moveComplete;
+    }
+
+    public boolean isCastingComplete() {
+        return castingComplete;
+    }
+
+    public void setCastingComplete(boolean castingComplete) {
+        this.castingComplete = castingComplete;
+    }
+
+    public boolean isManualTarget() {
+        return manualTarget;
+    }
+
+    public void setManualTarget(boolean manualTarget) {
+        this.manualTarget = manualTarget;
+    }
+
+    public List<ThreatLevel> getThreatLevels() {
+        return threatLevels;
+    }
+
+    public void setThreatLevels(List<ThreatLevel> threatLevels) {
+        this.threatLevels = threatLevels;
+    }
+
 }

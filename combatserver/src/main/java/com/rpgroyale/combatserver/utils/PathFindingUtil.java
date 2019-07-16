@@ -74,7 +74,7 @@ public class PathFindingUtil {
         List<Node> neighborNodes = new ArrayList<>();
         for(int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-                Node neighborNode = new Node(source.location.intX + x, source.location.intY + y);
+                Node neighborNode = new Node(source.getLocX() + x, source.getLocY() + y);
 
                 if(isValidLocation(neighborNode.x, neighborNode.y)) {
                     GridLocation neigborLocation = combatGrid.getLocationAt(neighborNode.x, neighborNode.y);
@@ -84,7 +84,7 @@ public class PathFindingUtil {
                         continue;
                     }
 
-                    neighborNode.cost = PathFindingUtil.getDistance(neighborNode.x, neighborNode.y, target.location.intX, target.location.intY);
+                    neighborNode.cost = PathFindingUtil.getDistance(neighborNode.x, neighborNode.y, target.getLocX(), target.getLocY());
                     neighborNodes.add(neighborNode);
                 }
             }

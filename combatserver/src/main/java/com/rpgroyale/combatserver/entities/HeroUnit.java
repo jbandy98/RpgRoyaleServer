@@ -9,7 +9,7 @@ public class HeroUnit extends CombatUnit {
     public Hero hero;
 
 
-    public HeroUnit(int x, int y, boolean isHero, AIStrategy ai) {
+    public HeroUnit(int x, int y, boolean isHero, String ai) {
         super(x,y,isHero,ai);
     }
 
@@ -104,6 +104,26 @@ public class HeroUnit extends CombatUnit {
     @Override
     public int getCurrentHp() {
         return hero.getCurrentHp();
+    }
+
+    @Override
+    public int getMaxHp() {
+        return hero.getMaxHp();
+    }
+
+    @Override
+    public int getCurrentSp() {
+        return hero.getCurrentSp();
+    }
+
+    @Override
+    public int getMaxSp() {
+        return hero.getMaxSp();
+    }
+
+    @Override
+    public int getLevel() {
+        return hero.getLevel();
     }
 
 }

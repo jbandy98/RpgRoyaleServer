@@ -1,8 +1,8 @@
 package com.rpgroyale.combatserver.entities;
 
 import com.rpgroyale.combatserver.utils.PathFindingUtil;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CombatGrid {
@@ -11,6 +11,10 @@ public class CombatGrid {
     private GridLocation[][] location;
     private List<CombatUnit> units;
 
+    public CombatGrid() {
+        units = new ArrayList<>();
+        location = new GridLocation[width][height];
+    }
     public boolean isOccupied(GridLocation checkedLocation)
     {
         return checkedLocation.isOccupied;
@@ -19,12 +23,11 @@ public class CombatGrid {
     public GridLocation[][] populateMap()
     {
         // first initialize all the cells
-        location = new GridLocation[width][height];
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                location[x][y] = new GridLocation(x, y, false, null);
+                location[x][y] = new GridLocation(x, y, false, -1);
             }
         }
 
@@ -33,15 +36,15 @@ public class CombatGrid {
         {
             if (unit.isHero)
             {
-                location[unit.location.intX][unit.location.intY].isOccupied = true;
-                location[unit.location.intX][unit.location.intY].unit = unit;
+                location[unit.locX][unit.locY].isOccupied = true;
+                location[unit.locX][unit.locY].unitId = unit.getUnitId();
             }
             else
             {
                 if (!unit.isDead)
                 {
-                    location[unit.location.intX][unit.location.intY].isOccupied = true;
-                    location[unit.location.intX][unit.location.intY].unit = unit;
+                    location[unit.locX][unit.locY].isOccupied = true;
+                    location[unit.locX][unit.locY].unitId = unit.getUnitId();
                 }
             }
         }
@@ -68,11 +71,6 @@ public class CombatGrid {
 
     public List<CombatUnit> removeUnitFromCombatGrid(CombatUnit unit)
     {
-        // clean up threat levels
-        for(CombatUnit threatUnit: units) {
-            threatUnit.removeUnitFromThreatLevels(unit);
-        }
-
         units.remove(unit);
 
         return units;
@@ -83,10 +81,10 @@ public class CombatGrid {
         return location[x][y];
     }
 
-    public void addUnitAt(int x, int y, CombatUnit unit)
+    public void addUnitAt(int x, int y, Integer unitId)
     {
-        location[x][y].unit = unit;
-        if (unit != null)
+        location[x][y].unitId = unitId;
+        if (unitId != -1)
         {
             location[x][y].isOccupied = true;
         }
@@ -94,6 +92,57 @@ public class CombatGrid {
         {
             location[x][y].isOccupied = false;
         }
+    }
+
+    public void moveUnitTo(CombatUnit unit, int targetX, int targetY)
+    {
+        if (unit.moveComplete)
+        {
+            if (!getLocationAt(targetX, targetY).isOccupied) {
+                unit.locX = targetX;
+                unit.locY = targetY;
+                GridLocation updatedLocation = getLocationAt(unit.locX, unit.locY);
+                updatedLocation.isOccupied = true;
+                updatedLocation.unitId = unit.getUnitId();
+            }
+            unit.targetX = -1;
+            unit.targetY = -1;
+            unit.isMoving = false;
+        } else {
+            unit.isMoving = true;
+            unit.targetX = targetX;
+            unit.targetY = targetY;
+        }
+    }
+
+    public void runFromUnit(CombatUnit unit, CombatUnit target) {
+        GridLocation targetSpot = PathFindingUtil.instance.findPathAway(unit.locX, unit.locY, target.locX, target.locY);
+        moveUnitTo(unit, targetSpot.intX, targetSpot.intY);
+    }
+
+    public void chaseUnit(CombatUnit unit, CombatUnit target)
+    {
+        GridLocation moveLocation = PathFindingUtil.instance.findPathTowards(unit, target);
+
+        if (moveLocation != null)
+            moveUnitTo(unit, moveLocation.intX, moveLocation.intY);
+    }
+
+    public Integer chooseClosestOpponentAsTarget(boolean isHero, int x, int y, List<CombatUnit> units)
+    {
+        float shortestDistance = 100.0f;
+        Integer closestTarget = -1;
+        for(CombatUnit target : units)
+        {
+            if (target.isHero != isHero) {
+                float distance = PathFindingUtil.getDistance(x, y, target.locX, target.locY);
+                if (distance < shortestDistance) {
+                    shortestDistance = distance;
+                    closestTarget = target.unitId;
+                }
+            }
+        }
+        return closestTarget;
     }
 
     public int getWidth() {

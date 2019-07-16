@@ -20,7 +20,6 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        WebSocketHandler webSocketHandler = new WebSocketHandler();
-        webSocketHandlerRegistry.addHandler(webSocketHandler, "/combatsocket").setAllowedOrigins("*").addInterceptors(webSocketHandler);
+        webSocketHandlerRegistry.addHandler(WebSocketHandler.Instance(), "/combatsocket").setAllowedOrigins("*");
     }
 }

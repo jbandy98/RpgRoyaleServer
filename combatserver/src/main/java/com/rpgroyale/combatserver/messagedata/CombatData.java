@@ -1,139 +1,25 @@
 package com.rpgroyale.combatserver.messagedata;
 
-import com.rpgroyale.combatserver.entities.*;
-import org.springframework.web.socket.WebSocketMessage;
-
 
 import java.util.List;
 
-public class CombatData implements WebSocketMessage<CombatData> {
-    Integer gameId;
-    Integer encounterId;
-    PlayerGameData playerData;
-    List<HeroUnit> heroUnits;
-    List<EnemyUnit> enemyUnits;
-    List<CombatUnit> allUnits;
-    CombatGrid combatGrid;
-    int gpEarned;
-    int xpEarned;
-    int apEarned;
-    String combatState;
+public class CombatData {
+    public String playerId;
+    public Integer gameId;
+    public Integer encounterId;
+    public String gameState;
+    public List<CombatDataUnit> dataUnits;
 
-    public CombatData(Integer gameId, Integer encounterId, PlayerGameData playerData, List<HeroUnit> heroUnits, List<EnemyUnit> enemyUnits, List<CombatUnit> allUnits, CombatGrid combatGrid, int gpEarned, int xpEarned, int apEarned, String combatState) {
+    public CombatData(String playerId, Integer gameId, Integer encounterId, String gameState, List<CombatDataUnit> dataUnits) {
+        this.playerId = playerId;
         this.gameId = gameId;
         this.encounterId = encounterId;
-        this.playerData = playerData;
-        this.heroUnits = heroUnits;
-        this.enemyUnits = enemyUnits;
-        this.allUnits = allUnits;
-        this.combatGrid = combatGrid;
-        this.gpEarned = gpEarned;
-        this.xpEarned = xpEarned;
-        this.apEarned = apEarned;
-        this.combatState = combatState;
+        this.gameState = gameState;
+        this.dataUnits = dataUnits;
     }
 
-    public Integer getGameId() {
-        return gameId;
+    public String getPlayerId() {
+        return playerId;
     }
 
-    public void setGameId(Integer gameId) {
-        this.gameId = gameId;
-    }
-
-    public Integer getEncounterId() {
-        return encounterId;
-    }
-
-    public void setEncounterId(Integer encounterId) {
-        this.encounterId = encounterId;
-    }
-
-    public PlayerGameData getPlayerData() {
-        return playerData;
-    }
-
-    public void setPlayerData(PlayerGameData playerData) {
-        this.playerData = playerData;
-    }
-
-    public List<HeroUnit> getHeroUnits() {
-        return heroUnits;
-    }
-
-    public void setHeroUnits(List<HeroUnit> heroUnits) {
-        this.heroUnits = heroUnits;
-    }
-
-    public List<EnemyUnit> getEnemyUnits() {
-        return enemyUnits;
-    }
-
-    public void setEnemyUnits(List<EnemyUnit> enemyUnits) {
-        this.enemyUnits = enemyUnits;
-    }
-
-    public List<CombatUnit> getAllUnits() {
-        return allUnits;
-    }
-
-    public void setAllUnits(List<CombatUnit> allUnits) {
-        this.allUnits = allUnits;
-    }
-
-    public CombatGrid getCombatGrid() {
-        return combatGrid;
-    }
-
-    public void setCombatGrid(CombatGrid combatGrid) {
-        this.combatGrid = combatGrid;
-    }
-
-    public int getGpEarned() {
-        return gpEarned;
-    }
-
-    public void setGpEarned(int gpEarned) {
-        this.gpEarned = gpEarned;
-    }
-
-    public int getXpEarned() {
-        return xpEarned;
-    }
-
-    public void setXpEarned(int xpEarned) {
-        this.xpEarned = xpEarned;
-    }
-
-    public int getApEarned() {
-        return apEarned;
-    }
-
-    public void setApEarned(int apEarned) {
-        this.apEarned = apEarned;
-    }
-
-    public String getCombatState() {
-        return combatState;
-    }
-
-    public void setCombatState(String combatState) {
-        this.combatState = combatState;
-    }
-
-
-    @Override
-    public CombatData getPayload() {
-        return this;
-    }
-
-    @Override
-    public int getPayloadLength() {
-        return 1;
-    }
-
-    @Override
-    public boolean isLast() {
-        return true;
-    }
 }
